@@ -19,3 +19,9 @@ End the log with your plan for what to try next.
 - why: The teacher suggested it. I ran it twice with different seeds to see how much the score changes just by chance, so I know how big a change has to be before it means something. It also gives me a starting score to compare my later changes with.
 - validation: 0.4965 (seed 0), 0.4918 (seed 1) (before: none, first run)
 - what it means: On average over the five cities, the model gets about half of each city's validation photos right (0.4965 and 0.4918). The two seeds differ by about 0.005, so a change that improves the score by less than that could just be luck, and I should only believe a clearly bigger improvement. Per city the scores move even more between the seeds (for example Taipei 0.56 vs 0.51), so I should be careful with conclusions about one city based on a single run. Busan and Osaka are the weakest cities in both runs, and Tokyo is the strongest. I think Tokyo may be recognised more easily because it looks more different from the other cities, and the starter photos show it more clearly, but I have not tested this yet.
+
+## 2026-11-06 balanced (Track A)
+- changed: sample_weights draws every city equally often (each photo gets 1 / the number of photos of its city), instead of every photo once per round
+- why: Busan and Osaka were the weakest cities, and Busan has far fewer training photos than Tokyo. I expected that drawing every city equally often would improve Busan and Osaka, maybe at the cost of Tokyo, and raise the average.
+- validation: 0.5102 (before: 0.4965 seed 0, 0.4918 seed 1)
+- what it means: It worked as I expected: Busan and Osaka improved a lot and Tokyo got worse, and the average went up by about 0.015, which is more than the 0.005 difference between the baseline seeds. Seoul also went down, which I did not expect. I am fairly but not completely sure, because it is only one run, and per city the scores moved a lot between seeds before.
