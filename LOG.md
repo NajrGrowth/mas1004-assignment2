@@ -25,3 +25,9 @@ End the log with your plan for what to try next.
 - why: Busan and Osaka were the weakest cities, and Busan has far fewer training photos than Tokyo. I expected that drawing every city equally often would improve Busan and Osaka, maybe at the cost of Tokyo, and raise the average.
 - validation: 0.5102 (before: 0.4965 seed 0, 0.4918 seed 1)
 - what it means: It worked as I expected: Busan and Osaka improved a lot and Tokyo got worse, and the average went up by about 0.015, which is more than the 0.005 difference between the baseline seeds. Seoul also went down, which I did not expect. I am fairly but not completely sure, because it is only one run, and per city the scores moved a lot between seeds before.
+
+## 2026-11-09 b1 (Track B)
+- changed: first Track B model: the starter train_b.py with ResNet18 at 224, 4 epochs, and --balance (every city drawn equally often)
+- why: I wanted a valid Track B submission without much risk, so I used the starter script and added only --balance, because drawing every city equally often had helped Busan and Osaka in Track A. I hoped it would give a similar improvement
+- validation: 0.5005 (before: none, first Track B run)
+- what it means: b1 scored 0.5005, which is only slightly above the Track A baseline and within about the same range as the seed difference, so I cannot say it is really better. Busan and Osaka improved and Tokyo got worse, the same pattern as in Track A balanced. It is a bit lower than Track A balanced (0.5102), maybe because it trained on fewer photos, but it is only one run. I hoped for a similar improvement, and it only partly happened.
