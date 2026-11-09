@@ -31,3 +31,10 @@ End the log with your plan for what to try next.
 - why: I wanted a valid Track B submission without much risk, so I used the starter script and added only --balance, because drawing every city equally often had helped Busan and Osaka in Track A. I hoped it would give a similar improvement
 - validation: 0.5005 (before: none, first Track B run)
 - what it means: b1 scored 0.5005, which is only slightly above the Track A baseline and within about the same range as the seed difference, so I cannot say it is really better. Busan and Osaka improved and Tokyo got worse, the same pattern as in Track A balanced. It is a bit lower than Track A balanced (0.5102), maybe because it trained on fewer photos, but it is only one run. I hoped for a similar improvement, and it only partly happened.
+
+## 2026-11-09 curated (Track A)
+- rule, written before dropping: "I drop training photos that show nothing about the city: food, objects, art pieces, indoor photos (homes, malls, restaurants, metro), people, vehicle parts and plain text or logos. I keep normal street photos and buildings, even when they are not special."
+- changed: 51 training photos dropped (28 Busan, 23 Osaka), chosen from the suspects sheets of balanced_seed0 (suspects_balanced_seed0_busan_00 and suspects_balanced_seed0_osaka_00); the recipe is the balanced one, unchanged
+- why: 
+- validation: 
+- what it means: 
