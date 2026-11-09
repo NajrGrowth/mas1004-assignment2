@@ -35,6 +35,6 @@ End the log with your plan for what to try next.
 ## 2026-11-09 curated (Track A)
 - rule, written before dropping: "I drop training photos that show nothing about the city: food, objects, art pieces, indoor photos (homes, malls, restaurants, metro), people, vehicle parts and plain text or logos. I keep normal street photos and buildings, even when they are not special."
 - changed: 51 training photos dropped (28 Busan, 23 Osaka), chosen from the suspects sheets of balanced_seed0 (suspects_balanced_seed0_busan_00 and suspects_balanced_seed0_osaka_00); the recipe is the balanced one, unchanged
-- why: 
-- validation: 
-- what it means: 
+- why: In the photo sheets of Busan and Osaka I saw many photos that show nothing about the city, like food, indoor photos and art. I expected that the model would learn better from only photos that show the city, and that Busan and Osaka would improve a bit. I could only look at one sheet per city, so I did not expect a big change.
+- validation: 0.5103 (before: 0.5102 balanced)
+- what it means: It did not change anything I can measure: the score went from 0.5102 to 0.5103, which is far less than the 0.005 difference between seeds. Per city the scores moved a little, but Busan and Osaka did not clearly improve, and Seoul and Tokyo changed too even though I dropped nothing there, so these are probably just noise. I think 51 photos out of 44,257 is too few to see an effect. With more time I would look at many more photos, not only one sheet per city, and measure that
