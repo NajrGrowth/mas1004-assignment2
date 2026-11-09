@@ -38,3 +38,6 @@ End the log with your plan for what to try next.
 - why: In the photo sheets of Busan and Osaka I saw many photos that show nothing about the city, like food, indoor photos and art. I expected that the model would learn better from only photos that show the city, and that Busan and Osaka would improve a bit. I could only look at one sheet per city, so I did not expect a big change.
 - validation: 0.5103 (before: 0.5102 balanced)
 - what it means: It did not change anything I can measure: the score went from 0.5102 to 0.5103, which is far less than the 0.005 difference between seeds. Per city the scores moved a little, but Busan and Osaka did not clearly improve, and Seoul and Tokyo changed too even though I dropped nothing there, so these are probably just noise. I think 51 photos out of 44,257 is too few to see an effect. With more time I would look at many more photos, not only one sheet per city, and measure that
+
+## Next
+With one more week I would look at many more photos of Busan and Osaka, drop the ones that show nothing about the city, and measure that with several seeds. I would also try a different model and a bigger image size in Track B, and add photos of my own.
