@@ -1,2 +1,1 @@
-python src/train_b.py --tag b1 --balance --submit
-python src/check_submission.py --no-val
+python src/curate.py suspects results/balanced_seed0/model.onnx --every 4
