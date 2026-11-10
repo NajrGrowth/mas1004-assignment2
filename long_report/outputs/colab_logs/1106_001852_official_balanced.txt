@@ -1,0 +1,24 @@
+$ python src/official.py --tag balanced
+# commit 2d633ef
+Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth
+
+  0%|          | 0.00/44.7M [00:00<?, ?B/s]
+ 45%|████▌     | 20.1M/44.7M [00:00<00:00, 211MB/s]
+ 93%|█████████▎| 41.5M/44.7M [00:00<00:00, 219MB/s]
+100%|██████████| 44.7M/44.7M [00:00<00:00, 220MB/s]
+Track A, seed 0, on cuda: all training photos (seoul 11274, busan 5191, tokyo 13347, osaka 7200, taipei 7245)
+3906 steps of 64 photos = 249,984 photos through the network
+  step   390/3906  loss 1.436  (226s)
+  step   780/3906  loss 1.260  (437s)
+  step  1170/3906  loss 1.152  (644s)
+  step  1560/3906  loss 1.082  (851s)
+  step  1950/3906  loss 1.025  (1063s)
+  step  2340/3906  loss 0.950  (1278s)
+  step  2730/3906  loss 0.883  (1494s)
+  step  3120/3906  loss 0.827  (1714s)
+  step  3510/3906  loss 0.787  (1929s)
+  step  3900/3906  loss 0.767  (2144s)
+  step  3906/3906  loss 0.781  (2147s)
+
+validation score 0.510  (seoul 0.531, busan 0.460, tokyo 0.503, osaka 0.459, taipei 0.598)
+training took 35.8 min; wrote /content/drive/MyDrive/mas1004/assignment2/results/balanced_seed0/model.onnx

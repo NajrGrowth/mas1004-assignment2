@@ -11,74 +11,172 @@
 %
 % To make the PDF: compress this folder into a zip, and on Overleaf choose
 % New Project, Upload Project. Set Menu, Compiler to XeLaTeX, and Recompile.
+%
+% Lines marked % NOAH are Noah's own words, word for word. Everything else is
+% written by the agent and only states facts from the outputs.
 
 \documentclass[11pt]{article}
 \usepackage{mas1004}
 
 \reporttitle{Assignment 2: Long report}
-\studentname{Your name}
-\studentid{Your student ID}
+\studentname{Noah Andreas Jozef Ruijpers}
+\studentid{G20260448}
 
 \begin{document}
 \makeheader
 
-\fillin{Your leaderboard nickname, and the tags of your last Track A and Track B releases.}
-
-% The sections below are a suggestion. Change, merge or add sections as you
-% like; README.md, "The long report", says what a reader should be able to see.
+Leaderboard nickname: stroopwafel123. Final releases: track-a-3 (Track A) and
+track-b-1 (Track B).
 
 % ---------------------------------------------------------------------------
 \section*{Track A}
+
+All runs below are \texttt{official.py} runs on Colab (250,000 photos through
+the network, seed 0 unless stated), with the numbers from
+\texttt{experiments.csv}.
 
 \begin{center}\footnotesize
 \begin{tabular}{lp{0.6\linewidth}r}
 \toprule
 tag & what changed from the run before & validation \\
 \midrule
-\multicolumn{3}{l}{\fillin{one row per recipe, with the numbers from experiments.csv}} \\
+baseline & nothing: the starter recipe, run with seeds 0 and 1 & 0.4965 / 0.4918 \\
+balanced & \texttt{sample\_weights}: every city drawn equally often & 0.5102 \\
+curated  & the balanced recipe, with 51 training photos dropped (28 Busan, 23 Osaka) in \texttt{selection.csv} & 0.5103 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\fillin{What you tried, why, and what you think each result means.}
+Validation per city:
 
-\fillin{Your final recipe and selection, and their leaderboard score next to
-their validation score.}
+\begin{center}\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+run & average & seoul & busan & tokyo & osaka & taipei \\
+\midrule
+baseline, seed 0 & 0.4965 & 0.5717 & 0.3734 & 0.6377 & 0.3402 & 0.5595 \\
+baseline, seed 1 & 0.4918 & 0.5741 & 0.3827 & 0.6150 & 0.3741 & 0.5132 \\
+balanced         & 0.5102 & 0.5306 & 0.4604 & 0.5032 & 0.4591 & 0.5979 \\
+curated          & 0.5103 & 0.5425 & 0.4676 & 0.5161 & 0.4361 & 0.5894 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+What I tried, why, and what I think each result means, as I wrote it in my
+lab notebook:
+
+% NOAH: the file below is Noah's Track A entries from LOG.md, exactly as they are.
+\outputfile{outputs/log_track_a.txt}
+
+\subsection*{Validation and leaderboard}
+
+My final Track A release is track-a-3: the balanced recipe
+(\texttt{track\_a/recipe.py}) with \texttt{track\_a/selection.csv}, the
+curated run. The validation scores are from my own runs; the leaderboard
+scores are from the leaderboard.
+
+\begin{center}\footnotesize
+\begin{tabular}{llll}
+\toprule
+release & run & validation & leaderboard \\
+\midrule
+track-a-1 & baseline & 0.4965 (seed 0), 0.4918 (seed 1) & 0.410 \\
+track-a-2 & balanced & 0.5102 & 0.416 (range 0.409-0.426) \\
+track-a-3 & curated  & 0.5103 & 0.412 (range 0.400-0.433) \\
+track-b-1 & b1       & 0.5005 & 0.411 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% NOAH
+My validation scores are higher than my leaderboard scores. For track-a-2 the grader's own validation score is 0.503, the mean of three seeds, and my leaderboard score is 0.416, so the difference of about 0.09 is far bigger than the seed noise of about 0.005. I think the main reason is that the photos are different. The validation photos come from the same sources as the training photos, and in those sources the frames of one video look much alike, so the model may have seen very similar photos in training. The leaderboard photos are street scenes from YouTube videos whose channels are not in the starter data, with at most 20 frames per video and the same number for every city. So validation is probably too optimistic, and the leaderboard is a harder test.
 
 % ---------------------------------------------------------------------------
-\section*{Decisions you made from photos}
+\section*{Decisions I made from photos}
 
-\picturefile{figures/mistakes_baseline_seed0_busan_00.png}
+I ran \texttt{curate.py suspects} with the balanced model on every fourth
+training photo (11,065 photos). For each city it draws the 48 training photos
+with the lowest probability for their own city. I looked at the sheets of the
+two weakest cities, Busan and Osaka.
 
-\fillin{What you looked at, what you saw in common, and the rule you wrote
-before acting.}
+\sidebyside{figures/suspects_balanced_seed0_busan_00.png}{\texttt{suspects\_balanced\_seed0\_busan\_00}}%
+           {figures/suspects_balanced_seed0_osaka_00.png}{\texttt{suspects\_balanced\_seed0\_osaka\_00}}
 
-\fillin{What you changed (the output of curate.py count, or the photos you
-added), and the scores before and after.}
+\outputfile{outputs/curate_suspects_excerpt.txt}
 
-\fillin{The requests you gave your agent for these decisions.}
+What I saw in common:
+
+% NOAH
+On the Busan and Osaka sheets I saw many photos that show nothing about the city, like food, indoor photos and art. Most of the photos on the sheets were normal street photos, and I kept those.
+
+The rule I wrote before dropping:
+
+% NOAH
+\begin{quote}
+I drop training photos that show nothing about the city: food, objects, art pieces, indoor photos (homes, malls, restaurants, metro), people, vehicle parts and plain text or logos. I keep normal street photos and buildings, even when they are not special.
+\end{quote}
+
+I dropped 28 photos from the Busan sheet and 23 from the Osaka sheet, 51 in
+all, with this rule as the reason in \texttt{track\_a/dropped.csv}. The
+selection after dropping (\texttt{curate.py count}):
+
+\outputfile{outputs/curate_count.txt}
+
+Scores before and after, with the same recipe and seed:
+
+\begin{center}\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+run & average & seoul & busan & tokyo & osaka & taipei \\
+\midrule
+balanced (before) & 0.5102 & 0.5306 & 0.4604 & 0.5032 & 0.4591 & 0.5979 \\
+curated (after)   & 0.5103 & 0.5425 & 0.4676 & 0.5161 & 0.4361 & 0.5894 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The requests I gave my agent for these decisions, word for word:
+
+% NOAH: the file below is Noah's own messages to the agent, word for word.
+\outputfile{outputs/agent_requests.txt}
 
 % ---------------------------------------------------------------------------
 \section*{Track B}
 
-\fillin{What you tried, one step at a time, and the validation score after
-each step.}
+I made one Track B run, b1: \texttt{train\_b.py} with ResNet18 at
+224\,$\times$\,224, starting from torchvision's \texttt{IMAGENET1K\_V1}
+weights, 4 epochs, with \texttt{-{}-balance} (every city drawn equally often),
+on the starter training photos. It is release track-b-1.
 
-\fillin{How you collected any extra photos.}
+\begin{center}\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+run & validation & seoul & busan & tokyo & osaka & taipei \\
+\midrule
+b1 & 0.5005 & 0.5027 & 0.4691 & 0.5030 & 0.4403 & 0.5876 \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\fillin{Your validation score next to your leaderboard score, and why they
-might disagree.}
+% NOAH
+I did not collect any extra photos.
 
-\subsection*{Your submission, as the grader sees it}
+My validation score next to my leaderboard score is in the table under
+``Validation and leaderboard'' in Track A.
+
+\subsection*{My submission, as the grader sees it}
 \outputfile{outputs/check_submission.txt}
 
 % ---------------------------------------------------------------------------
 \section*{What made the difference}
 
-\fillin{Which change helped most and which least, in both tracks, with your
-numbers.}
+% NOAH
+In Track A, balanced sampling helped most: +0.0137 over baseline seed 0, more than the seed noise of 0.0047. Dropping 51 photos helped least: 0.5103 against 0.5102, so no measurable effect. In Track B I made only one run (b1), so I cannot say which change helped there.
 
-\fillin{What you would do next with one more week.}
+What I would do next with one more week:
+
+% NOAH: from the "## Next" section of LOG.md, word for word.
+With one more week I would look at many more photos of Busan and Osaka, drop the ones that show nothing about the city, and measure that with several seeds. I would also try a different model and a bigger image size in Track B, and add photos of my own.
 
 % ---------------------------------------------------------------------------
 \section*{All runs}
